@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bologs.dao.FavoriteDao">
+
+    <resultMap type="com.example.bologs.entity.Favorite" id="FavoriteMap">
+        <result property="fid" column="fid" jdbcType="INTEGER"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="FavoriteMap">
+        select
+          fid, uid, pid
+        from blogs.favorite
+        where fid = #{fid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="FavoriteMap">
+        select
+          fid, uid, pid
+        from blogs.favorite
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="FavoriteMap">
+        select
+          fid, uid, pid
+        from blogs.favorite
+        <where>
+            <if test="fid != null">
+                and fid = #{fid}
+            </if>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="fid" useGeneratedKeys="true">
+        insert into blogs.favorite(uid, pid)
+        values (#{uid}, #{pid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blogs.favorite
+        <set>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+        </set>
+        where fid = #{fid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blogs.favorite where fid = #{fid}
+    </delete>
+
+</mapper>

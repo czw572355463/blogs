@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bologs.dao.UsersDao">
+
+    <resultMap type="com.example.bologs.entity.Users" id="UsersMap">
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="uname" column="uname" jdbcType="VARCHAR"/>
+        <result property="uloginname" column="uloginname" jdbcType="VARCHAR"/>
+        <result property="upass" column="upass" jdbcType="VARCHAR"/>
+        <result property="uimg" column="uimg" jdbcType="VARCHAR"/>
+        <result property="urealname" column="urealname" jdbcType="VARCHAR"/>
+        <result property="ujobname" column="ujobname" jdbcType="VARCHAR"/>
+        <result property="ucontact" column="ucontact" jdbcType="VARCHAR"/>
+        <result property="uemail" column="uemail" jdbcType="VARCHAR"/>
+        <result property="ustates" column="ustates" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--登陆-->
+    <select id="login" resultMap="UsersMap">
+        select
+            uid, uname, uloginname, upass, uimg, urealname, ujobname, ucontact, uemail, ustates
+        from blogs.users
+        where uloginname=#{uloginname} and upass=#{upass}
+    </select>
+    <!--查询单个-->
+    <select id="queryById" resultMap="UsersMap">
+        select
+          uid, uname, uloginname, upass, uimg, urealname, ujobname, ucontact, uemail, ustates
+        from blogs.users
+        where uid = #{uid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UsersMap">
+        select
+          uid, uname, uloginname, upass, uimg, urealname, ujobname, ucontact, uemail, ustates
+        from blogs.users
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UsersMap">
+        select
+          uid, uname, uloginname, upass, uimg, urealname, ujobname, ucontact, uemail, ustates
+        from blogs.users
+        <where>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="uname != null and uname != ''">
+                and uname = #{uname}
+            </if>
+            <if test="uloginname != null and uloginname != ''">
+                and uloginname = #{uloginname}
+            </if>
+            <if test="upass != null and upass != ''">
+                and upass = #{upass}
+            </if>
+            <if test="uimg != null and uimg != ''">
+                and uimg = #{uimg}
+            </if>
+            <if test="urealname != null and urealname != ''">
+                and urealname = #{urealname}
+            </if>
+            <if test="ujobname != null and ujobname != ''">
+                and ujobname = #{ujobname}
+            </if>
+            <if test="ucontact != null and ucontact != ''">
+                and ucontact = #{ucontact}
+            </if>
+            <if test="uemail != null and uemail != ''">
+                and uemail = #{uemail}
+            </if>
+            <if test="ustates != null">
+                and ustates = #{ustates}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into blogs.users(uname, uloginname, upass, uimg, urealname, ujobname, ucontact, uemail, ustates)
+        values (#{uname}, #{uloginname}, #{upass}, #{uimg}, #{urealname}, #{ujobname}, #{ucontact}, #{uemail}, #{ustates})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blogs.users
+        <set>
+            <if test="uname != null and uname != ''">
+                uname = #{uname},
+            </if>
+            <if test="uloginname != null and uloginname != ''">
+                uloginname = #{uloginname},
+            </if>
+            <if test="upass != null and upass != ''">
+                upass = #{upass},
+            </if>
+            <if test="uimg != null and uimg != ''">
+                uimg = #{uimg},
+            </if>
+            <if test="urealname != null and urealname != ''">
+                urealname = #{urealname},
+            </if>
+            <if test="ujobname != null and ujobname != ''">
+                ujobname = #{ujobname},
+            </if>
+            <if test="ucontact != null and ucontact != ''">
+                ucontact = #{ucontact},
+            </if>
+            <if test="uemail != null and uemail != ''">
+                uemail = #{uemail},
+            </if>
+            <if test="ustates != null">
+                ustates = #{ustates},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blogs.users where uid = #{uid}
+    </delete>
+
+</mapper>

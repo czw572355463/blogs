@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bologs.dao.ArticleDao">
+
+    <resultMap type="com.example.bologs.entity.Article" id="ArticleMap">
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="ptitle" column="ptitle" jdbcType="VARCHAR"/>
+        <result property="pcontent" column="pcontent" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="plikecount" column="plikecount" jdbcType="INTEGER"/>
+        <result property="pfavoritecount" column="pfavoritecount" jdbcType="INTEGER"/>
+        <result property="ptype" column="ptype" jdbcType="VARCHAR"/>
+        <result property="cretime" column="cretime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryAllWithCount" resultMap="ArticleMap">
+        select
+             pid, ptitle, pcontent, uid, plikecount, pfavoritecount, ptype, cretime
+        from blogs.article
+        WHERE ptype=#{ptype} limit 0,${count*size}
+    </select>
+
+    <select id="queryAllByType" resultMap="ArticleMap">
+        select
+             pid, ptitle, pcontent, uid, plikecount, pfavoritecount, ptype, cretime
+        from blogs.article
+        where ptype=#{ptype}
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticleMap">
+        select
+          pid, ptitle, pcontent, uid, plikecount, pfavoritecount, ptype, cretime
+        from blogs.article
+        where pid = #{pid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticleMap">
+        select
+          pid, ptitle, pcontent, uid, plikecount, pfavoritecount, ptype, cretime
+        from blogs.article
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticleMap">
+        select
+          pid, ptitle, pcontent, uid, plikecount, pfavoritecount, ptype, cretime
+        from blogs.article
+        <where>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="ptitle != null and ptitle != ''">
+                and ptitle = #{ptitle}
+            </if>
+            <if test="pcontent != null and pcontent != ''">
+                and pcontent = #{pcontent}
+            </if>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="plikecount != null">
+                and plikecount = #{plikecount}
+            </if>
+            <if test="pfavoritecount != null">
+                and pfavoritecount = #{pfavoritecount}
+            </if>
+            <if test="ptype != null and ptype != ''">
+                and ptype = #{ptype}
+            </if>
+            <if test="cretime != null and cretime != ''">
+                and cretime = #{cretime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="pid" useGeneratedKeys="true">
+        insert into blogs.article(ptitle, pcontent, uid, plikecount, pfavoritecount, ptype, cretime)
+        values (#{ptitle}, #{pcontent}, #{uid}, #{plikecount}, #{pfavoritecount}, #{ptype}, #{cretime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update blogs.article
+        <set>
+            <if test="ptitle != null and ptitle != ''">
+                ptitle = #{ptitle},
+            </if>
+            <if test="pcontent != null and pcontent != ''">
+                pcontent = #{pcontent},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="plikecount != null">
+                plikecount = #{plikecount},
+            </if>
+            <if test="pfavoritecount != null">
+                pfavoritecount = #{pfavoritecount},
+            </if>
+            <if test="ptype != null and ptype != ''">
+                ptype = #{ptype},
+            </if>
+            <if test="cretime != null and cretime != ''">
+                cretime = #{cretime},
+            </if>
+        </set>
+        where pid = #{pid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from blogs.article where pid = #{pid}
+    </delete>
+
+</mapper>
