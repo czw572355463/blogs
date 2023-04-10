@@ -3,6 +3,7 @@ package com.example.bologs.controller;
 import com.example.bologs.entity.Users;
 import com.example.bologs.service.UsersService;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 
 /**
@@ -36,7 +37,4 @@ public class UsersController {
     public Users login(Users users){
         return this.usersService.login(users);
     }
-
-    @RequestMapping("register")
-    public Users register(Users users){return  this.usersService.register(users);};
 }

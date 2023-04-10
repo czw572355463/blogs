@@ -40,7 +40,7 @@ public interface UsersService {
      * @param users 实例对象
      * @return 实例对象
      */
-    Users register(Users users);
+    Users insert(Users users);
 
     /**
      * 修改数据
