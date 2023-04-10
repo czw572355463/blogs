@@ -52,6 +52,7 @@ public class UsersServiceImpl implements UsersService {
         return this.usersDao.queryAllByLimit(offset, limit);
     }
 
+
     /**
      * 新增数据
      *
@@ -59,8 +60,8 @@ public class UsersServiceImpl implements UsersService {
      * @return 实例对象
      */
     @Override
-    public Users insert(Users users) {
-        this.usersDao.insert(users);
+    public Users register(Users users) {
+        this.usersDao.register(users);
         return users;
     }
 
@@ -86,4 +87,6 @@ public class UsersServiceImpl implements UsersService {
     public boolean deleteById(Integer uid) {
         return this.usersDao.deleteById(uid) > 0;
     }
+
+
 }

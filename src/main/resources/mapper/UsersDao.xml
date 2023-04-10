@@ -78,10 +78,11 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+    <insert id="register" keyProperty="uid" useGeneratedKeys="true">
         insert into blogs.users(uname, uloginname, upass, uimg, urealname, ujobname, ucontact, uemail, ustates)
         values (#{uname}, #{uloginname}, #{upass}, #{uimg}, #{urealname}, #{ujobname}, #{ucontact}, #{uemail}, #{ustates})
     </insert>
+
 
     <!--通过主键修改数据-->
     <update id="update">

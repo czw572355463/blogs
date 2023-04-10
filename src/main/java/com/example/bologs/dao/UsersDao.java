@@ -51,7 +51,7 @@ public interface UsersDao {
      * @param users 实例对象
      * @return 影响行数
      */
-    int insert(Users users);
+    int register(Users users);
 
     /**
      * 修改数据
