@@ -37,4 +37,7 @@ public class UsersController {
     public Users login(Users users){
         return this.usersService.login(users);
     }
+
+    @RequestMapping("info")
+    public Users info(Users users){return this.usersService.queryByUloginname(users);}
 }

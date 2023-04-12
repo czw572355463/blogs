@@ -27,6 +27,8 @@ public interface UsersDao {
      */
     Users queryById(Integer uid);
 
+    Users queryByUloginname(Users uloginname);
+
     /**
      * 查询指定行数据
      *

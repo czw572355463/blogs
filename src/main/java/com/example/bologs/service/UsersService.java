@@ -26,6 +26,12 @@ public interface UsersService {
     Users queryById(Integer uid);
 
     /**
+     * 通过用户名查找
+     * @param uloginname
+     * @return
+     */
+    Users queryByUloginname(Users uloginname);
+    /**
      * 查询多条数据
      *
      * @param offset 查询起始位置
